@@ -1,0 +1,97 @@
+
+.background {
+    background-color: #e2e2e2;
+}
+
+.heading {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.heading h1 {
+    color: #353941;
+    font-weight: 1000;
+    font-size: 3.5rem;
+}
+
+.container {
+    cursor: pointer;
+    padding-bottom: 6rem;
+    gap: 2rem;
+    padding-top: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.container .box {
+    border-radius: 15px;
+    position: relative;
+    width: 320px;
+    background-color: whitesmoke;
+    padding: 100px 40px 60px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .1);
+}
+
+.container .box::before {
+    border-radius: 15px;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #4A73A1;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s;
+}
+
+.container .box:hover::before {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    transition: transform 0.5s;
+}
+
+.container .box h2 {
+    position: absolute;
+    z-index: 1;
+    font-size: 4em;
+    left: 40px;
+    top: 60px;
+    font-weight: 800;
+    opacity: 0.2;
+    transition: 0.5s;
+}
+
+.container .box:hover h2 {
+    opacity: 1;
+    color: white;
+    transform: translateY(-40px);
+}
+
+.container .box h3 {
+    position: relative;
+    font-size: 1.5em;
+    z-index: 2;
+    color: #000;
+    transition: 0.5s;
+}
+
+.container .box:hover h3 {
+    color: white;
+
+}
+
+.container .box p {
+    position: relative;
+    z-index: 2;
+    color: #000000;
+    transition: 0.5s;
+}
+
+.container .box:hover h3,
+.container .box:hover p {
+    color: white;
+}

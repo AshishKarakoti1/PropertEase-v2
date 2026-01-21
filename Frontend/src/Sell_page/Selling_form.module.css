@@ -1,0 +1,252 @@
+
+:root {
+  --primary-color: #4A73A1;
+  --primary-light: #4A73A1;
+  --primary-dark: #314d6d;
+  --secondary-color: #4a73a12d;
+  --text-color: #333;
+  --background-color: #4a73a12d;
+}
+
+/* .container {
+  height: 100%;
+  width: 50%;
+  text-align: center;
+  padding: 3rem;
+  box-sizing: border-box;
+} */
+
+.heading_div {
+  display: flex;
+}
+
+.logo {
+  padding-right: 70px;
+}
+
+.logo_img {
+  height: 2rem;
+}
+
+.heading {
+  color: var(--primary-color);
+  font-size: 28px;
+  /* Reduced font size */
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.inputRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  /* Reduced margin */
+}
+
+.inputGroup {
+  flex: 1;
+  margin-right: 10px;
+  /* Adjusted margin */
+}
+
+.inputGroup:last-child {
+  margin-right: 0;
+}
+
+.input {
+  padding: 10px 12px;
+  /* Reduced padding */
+  font-size: 13px;
+  /* Reduced font size */
+  border: 2px solid var(--primary-light);
+  border-radius: 8px;
+  /* Adjusted border radius */
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.label {
+  font-size: 13px;
+  /* Reduced font size */
+  color: var(--primary-color);
+  margin-bottom: 5px;
+  /* Adjusted margin */
+  font-weight: 500;
+  display: block;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.input[type="text"],
+.input[type="email"],
+.input[type="url"],
+.input[type="number"],
+.input[type="file"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 14px;
+  border: 2px solid var(--primary-light);
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input[type="text"]:focus,
+.input[type="email"]:focus,
+.input[type="url"]:focus,
+.input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+}
+
+.button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px;
+  /* Reduced padding */
+  font-size: 16px;
+  /* Reduced font size */
+  border: none;
+  border-radius: 8px;
+  /* Adjusted border radius */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-top: 15px;
+  /* Adjusted margin */
+}
+
+.button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
+}
+
+.heading_div{
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 25px;
+    /* Adjusted padding */
+    margin: 10px;
+    /* Adjusted margin */
+  }
+
+  .heading {
+    font-size: 22px;
+    /* Adjusted font size */
+    margin-bottom: 15px;
+    /* Adjusted margin */
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  .input-group {
+    margin-right: 0;
+    margin-bottom: 10px;
+    /* Adjusted margin */
+  }
+
+  .label {
+    font-size: 12px;
+    /* Adjusted font size */
+  }
+
+  .input {
+    font-size: 13px;
+    padding: 8px 10px;
+    /* Adjusted padding */
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    padding: 20px 15px;
+    /* Adjusted padding */
+  }
+
+  .heading {
+    font-size: 20px;
+    /* Adjusted font size */
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    /* Adjusted margin */
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .input {
+    font-size: 12px;
+    /* Adjusted font size */
+    padding: 8px 10px;
+    /* Adjusted padding */
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.input,
+.button {
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+.button:hover {
+  transform: scale(1.02);
+}

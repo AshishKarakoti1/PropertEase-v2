@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+.navbar {
+    height: 6rem;
+    /* 24 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 3rem;
+    /* 9 */
+    padding-right: 3rem;
+    /* 9 */
+    position: relative;
+    /* 16 */
+}
+
+.bgBlue {
+    background-color: #4A73A1;
+    /* Blue-400 */
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 65%;
+}
+
+.logoContainer {
+    flex-shrink: 0;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.logo img {
+    height: 25px;
+}
+
+.logo p {
+    color: white;
+    font-family: 'Sriracha', sans-serif;
+    font-size: 2.5rem;
+    padding-top: 1rem;
+}
+
+.navList {
+    display: flex;
+    gap: 2.25rem;
+    /* 9 */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+}
+
+.navLink {
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+    /* 2xl */
+}
+
+.navItem :hover {
+    color: rgba(245, 245, 245, 0.707);
+    transition: .3s ease-in-out;
+}
+
+.rightContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 1.75rem;
+    /* 7 */
+}
+
+.aboutUs {
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+    /* 2xl */
+}
+
+.aboutUs:hover {
+    cursor: pointer;
+    color: rgba(245, 245, 245, 0.707);
+    transition-duration: 200ms;
+}
+
+.LogOutBtn {
+    color: #ffff;
+    border: 2px solid white;
+    padding: 0.5rem;
+    width: 5.5rem;
+    /* 22 */
+    border-radius: 0.5rem;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.LogOutBtn:hover {
+    background-color: rgb(214, 5, 5);
+}
