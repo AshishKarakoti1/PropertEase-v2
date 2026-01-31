@@ -17,6 +17,8 @@ import {
     ArrowLeft
 } from 'lucide-react';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Single_Listing = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -31,7 +33,7 @@ const Single_Listing = () => {
 
     const fetchDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/buy/${id}`);
+            const response = await axios.get(`${API}/buy/${id}`);
             setListing(response.data.listing);
         } catch (err) {
             setError('Failed to fetch property details.');
@@ -49,13 +51,27 @@ const Single_Listing = () => {
         navigate('/contact');
     };
 
-    if (loading) return <div className="h-screen flex items-center justify-center"><Loading /></div>;
-    if (error) return <div className="h-screen flex items-center justify-center text-red-500 font-bold">{error}</div>;
+    if (loading) {
+        return (
+            <div className="h-screen flex items-center justify-center">
+                <Loading />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="h-screen flex items-center justify-center text-red-500 font-bold">
+                {error}
+            </div>
+        );
+    }
 
     const { location, price, bedrooms, bathrooms, area, images, createdBy, category } = listing;
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-4 md:py-12">
+
             <button
                 onClick={() => navigate(-1)}
                 className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 transition-colors mb-6 group"
@@ -66,7 +82,7 @@ const Single_Listing = () => {
 
             <div className="bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col lg:flex-row min-h-[70vh]">
 
-                {/* Image Gallery Section */}
+                {/* Image Gallery */}
                 <div className="w-full lg:w-3/5 p-4 flex flex-col gap-4">
                     <div className="relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem]">
                         <img
@@ -74,8 +90,11 @@ const Single_Listing = () => {
                             className="h-full w-full object-cover transition-all duration-700"
                             alt="Property"
                         />
+
                         <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg">
-                            <span className="text-indigo-600 font-bold text-sm uppercase tracking-widest">{category}</span>
+                            <span className="text-indigo-600 font-bold text-sm uppercase tracking-widest">
+                                {category}
+                            </span>
                         </div>
                     </div>
 
@@ -84,23 +103,34 @@ const Single_Listing = () => {
                             <button
                                 key={idx}
                                 onClick={() => setIndex(idx)}
-                                className={`relative shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all ${index === idx ? 'border-indigo-600 scale-95 shadow-lg' : 'border-transparent hover:border-gray-200'
-                                    }`}
+                                className={`relative shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all ${
+                                    index === idx
+                                        ? 'border-indigo-600 scale-95 shadow-lg'
+                                        : 'border-transparent hover:border-gray-200'
+                                }`}
                             >
-                                <img src={img} className="w-full h-full object-cover" alt={`Thumb ${idx}`} />
+                                <img
+                                    src={img}
+                                    className="w-full h-full object-cover"
+                                    alt={`Thumb ${idx}`}
+                                />
                             </button>
                         ))}
                     </div>
                 </div>
 
-                {/* Content Section */}
+                {/* Content */}
                 <div className="w-full lg:w-2/5 p-8 md:p-6 flex flex-col justify-between">
                     <div>
+
                         <div className="flex justify-between items-start mb-2">
                             <div className="flex items-center gap-2 text-indigo-600">
                                 <MapPin size={20} />
-                                <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">{location}</h1>
+                                <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">
+                                    {location}
+                                </h1>
                             </div>
+
                             <button
                                 onClick={() => addToFavorites(email, id)}
                                 className="p-4 bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all active:scale-90"
@@ -112,62 +142,99 @@ const Single_Listing = () => {
                         <div className="flex items-center gap-4 mb-6">
                             <div className="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl font-bold">
                                 <Tag size={18} />
-                                <span>₹{price?.toLocaleString('en-IN')} {category !== 'selling' && '/ mo'}</span>
+                                <span>
+                                    ₹{price?.toLocaleString('en-IN')} {category !== 'selling' && '/ mo'}
+                                </span>
                             </div>
                         </div>
 
-                        {/* Property Specs Grid */}
+                        {/* Specs */}
                         <div className="grid grid-cols-3 gap-6 mb-12 py-6 border-y border-gray-100">
+
                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Bedroom</span>
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    Bedroom
+                                </span>
                                 <div className="flex items-center gap-2 text-gray-900 font-bold">
                                     <Bed className="text-indigo-600" size={20} />
                                     <span className="text-lg">{bedrooms}</span>
                                 </div>
                             </div>
+
                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Bathroom</span>
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    Bathroom
+                                </span>
                                 <div className="flex items-center gap-2 text-gray-900 font-bold">
                                     <Bath className="text-indigo-600" size={20} />
                                     <span className="text-lg">{bathrooms}</span>
                                 </div>
                             </div>
+
                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Area</span>
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    Area
+                                </span>
                                 <div className="flex items-center gap-2 text-gray-900 font-bold">
                                     <Maximize className="text-indigo-600" size={20} />
-                                    <span className="text-lg">{area} <small className="text-xs font-normal">sq m</small></span>
+                                    <span className="text-lg">
+                                        {area} <small className="text-xs font-normal">sq m</small>
+                                    </span>
                                 </div>
+                            </div>
+
+                        </div>
+
+                        {/* Seller */}
+                        <div className="bg-gray-50 rounded-[2rem] p-6 mb-10">
+                            <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-4">
+                                Seller Contact
+                            </h4>
+
+                            <div className="space-y-4">
+
+                                <div className="flex items-center gap-4 text-gray-700">
+                                    <div className="p-2 bg-white rounded-lg shadow-sm">
+                                        <User size={18} className="text-indigo-500" />
+                                    </div>
+                                    <span className="font-bold">
+                                        {createdBy?.username || 'Verified Seller'}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-4 text-gray-700">
+                                    <div className="p-2 bg-white rounded-lg shadow-sm">
+                                        <Phone size={18} className="text-indigo-500" />
+                                    </div>
+                                    <span className="font-medium">
+                                        {createdBy?.contactNumber || 'N/A'}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-4 text-gray-700">
+                                    <div className="p-2 bg-white rounded-lg shadow-sm">
+                                        <Mail size={18} className="text-indigo-500" />
+                                    </div>
+                                    <span className="font-medium text-sm truncate">
+                                        {createdBy?.email}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
 
-                        {/* Seller Details */}
-                        <div className="bg-gray-50 rounded-[2rem] p-6 mb-10">
-                            <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-4">Seller Contact</h4>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-4 text-gray-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm"><User size={18} className="text-indigo-500" /></div>
-                                    <span className="font-bold">{createdBy?.username || 'Verified Seller'}</span>
-                                </div>
-                                <div className="flex items-center gap-4 text-gray-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm"><Phone size={18} className="text-indigo-500" /></div>
-                                    <span className="font-medium">{createdBy?.contactNumber || 'N/A'}</span>
-                                </div>
-                                <div className="flex items-center gap-4 text-gray-700">
-                                    <div className="p-2 bg-white rounded-lg shadow-sm"><Mail size={18} className="text-indigo-500" /></div>
-                                    <span className="font-medium text-sm truncate">{createdBy?.email}</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
+                    {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-4">
+
                         <button
                             onClick={handleContact}
                             className="flex-1 bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-xl shadow-indigo-100 hover:bg-indigo-700 hover:scale-[1.02] transition-all"
                         >
                             Contact Owner
                         </button>
+
                         {category === 'selling' && (
                             <button
                                 onClick={() => navigate(`/mortgage-calculator?id=${id}&price=${price}`)}
@@ -177,7 +244,9 @@ const Single_Listing = () => {
                                 Mortgage Info
                             </button>
                         )}
+
                     </div>
+
                 </div>
             </div>
         </div>

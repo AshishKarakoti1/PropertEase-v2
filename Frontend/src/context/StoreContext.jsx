@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 import axios from 'axios';
 import { handleSuccess, handleError } from '../utils'
 
+const API = import.meta.env.VITE_API_URL;
+
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = ({ children }) => {
@@ -33,25 +35,25 @@ const StoreContextProvider = ({ children }) => {
         area: '',
         price: '',
         category: ''
-    })
+    });
 
     const getUserData = async (email) => {
         try {
-            const response = await axios.get(`http://localhost:5000/user/?email=${email}`);
+            const response = await axios.get(`${API}/user/?email=${email}`);
             setUser(response.data.userData);
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
     const fetchMyListings = async (email) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5000/user/listings?email=${email}`);
+            const response = await axios.get(`${API}/user/listings?email=${email}`);
             setMyListings(response.data.listings || []);
         } catch (err) {
             setError('Failed to fetch listings.');
-            console.error('Error fetching my listings:', err);
+            console.error(err);
         } finally {
             setLoading(false);
         }
@@ -60,46 +62,44 @@ const StoreContextProvider = ({ children }) => {
     const fetchMyFavorites = async (email) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5000/user/favorites?email=${email}`);
+            const response = await axios.get(`${API}/user/favorites?email=${email}`);
             setMyFavorites(response.data.favorites || []);
         } catch (err) {
-            setError('Failed to fetch listings.');
-            console.error('Error fetching my listings:', err);
+            setError('Failed to fetch favorites.');
+            console.error(err);
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     const addToFavorites = async (email, id) => {
         try {
-            const response = await axios.post('http://localhost:5000/user/favorites', { email, id });
+            const response = await axios.post(`${API}/user/favorites`, { email, id });
             setMyFavorites(response.data.favorites || []);
             handleSuccess('Added to favorites');
         } catch (err) {
-            handleError('failed to add listing to favorites');
-            setError('Failed to fetch listings.');
-            console.error('Error fetching my listings:', err);
+            handleError('Failed to add listing to favorites');
+            console.error(err);
         }
-    }
+    };
 
     const deleteFromFavorites = async (email, id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/user/favorites?email=${email}&id=${id}`);
+            const response = await axios.delete(`${API}/user/favorites?email=${email}&id=${id}`);
             setMyFavorites(response.data.favorites || []);
             handleSuccess('Removed from favorites');
         } catch (err) {
-            handleError('failed to delete listing from favorites');
-            setError('Failed to fetch listings.');
-            console.error('Error fetching my listings:', err);
+            handleError('Failed to delete listing from favorites');
+            console.error(err);
         }
-    }
+    };
 
     const fetchListings = async (page = 1) => {
         setLoading(true);
         setError(null);
 
         try {
-            const response = await axios.get(`http://localhost:5000/buy?page=${page}`);
+            const response = await axios.get(`${API}/buy?page=${page}`);
             const { listings, totalPages: total, currentPage: current } = response.data;
 
             setData(listings || []);
@@ -112,14 +112,11 @@ const StoreContextProvider = ({ children }) => {
         }
     };
 
-
-
     const applyFilters = async (page = 1) => {
-        console.log(filters);
         setLoading(true);
 
         try {
-            const response = await axios.post(`http://localhost:5000/buy?page=${page}`, filters);
+            const response = await axios.post(`${API}/buy?page=${page}`, filters);
             const { filteredListings, totalPages: total, currentPage: current } = response.data;
 
             setData(filteredListings || []);
@@ -127,12 +124,11 @@ const StoreContextProvider = ({ children }) => {
             setCurrentPage(current || 1);
         } catch (err) {
             setError('Error filtering data.');
-            console.error('Error filtering data:', err);
+            console.error(err);
         } finally {
             setLoading(false);
         }
     };
-
 
     const clearFilters = async () => {
         setFilters({
@@ -143,9 +139,8 @@ const StoreContextProvider = ({ children }) => {
             bathrooms: '',
             category: ''
         });
-        await fetchListings(); // Reuse fetch function
+        await fetchListings();
     };
-
 
     const contextValue = {
         data,
@@ -183,6 +178,6 @@ const StoreContextProvider = ({ children }) => {
             {children}
         </StoreContext.Provider>
     );
-}
+};
 
 export default StoreContextProvider;

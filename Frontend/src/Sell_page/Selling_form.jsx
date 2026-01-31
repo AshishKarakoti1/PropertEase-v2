@@ -8,10 +8,12 @@ import Loading from '../Buying_page/Loading';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Selling_form = () => {
     const navigate = useNavigate();
     const { setData, setLoading, loading } = useContext(StoreContext);
-    
+
     const [formData, setFormData] = useState({
         location: '',
         bedrooms: '',
@@ -20,12 +22,14 @@ const Selling_form = () => {
         price: '',
         category: 'selling'
     });
-    const [images, setImages] = useState([]); // Separate state for files for easier validation
+
+    const [images, setImages] = useState([]);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
+
         if (name === 'images') {
-            setImages(Array.from(files)); // Convert FileList to Array
+            setImages(Array.from(files));
         } else {
             setFormData({ ...formData, [name]: value });
         }
@@ -45,7 +49,6 @@ const Selling_form = () => {
             return;
         }
 
-        // Basic validation
         if (!formData.location || !formData.price || images.length === 0) {
             handleError("Location, Price, and at least one image are required.");
             setLoading(false);
@@ -53,7 +56,7 @@ const Selling_form = () => {
         }
 
         const dataPayload = new FormData();
-        // Append text fields
+
         dataPayload.append('location', formData.location);
         dataPayload.append('bedrooms', Number(formData.bedrooms));
         dataPayload.append('bathrooms', Number(formData.bathrooms));
@@ -62,29 +65,34 @@ const Selling_form = () => {
         dataPayload.append('user_email', user_email);
         dataPayload.append('category', formData.category);
 
-        // Append multiple images
         images.forEach((file) => {
             dataPayload.append('images', file);
         });
 
         try {
-            const URL = "http://localhost:5000/sell";
-            const response = await axios.post(URL, dataPayload, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const response = await axios.post(
+                `${API}/sell`,
+                dataPayload,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
 
             if (response.data.success) {
-                // If your backend returns all listings, update context
-                if (response.data.updatedListings) setData(response.data.updatedListings);
-                
+                if (response.data.updatedListings) {
+                    setData(response.data.updatedListings);
+                }
+
                 handleSuccess("Property listed successfully!");
                 navigate('/buy');
             }
+
         } catch (err) {
-            const errorMsg = err.response?.data?.message || "Failed to add listing";
+            const errorMsg =
+                err.response?.data?.message || "Failed to add listing";
             handleError(errorMsg);
         } finally {
             setLoading(false);
@@ -94,7 +102,9 @@ const Selling_form = () => {
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center h-screen gap-6">
-                <h2 className="text-xl font-semibold text-indigo-600">Uploading to Cloudinary...</h2>
+                <h2 className="text-xl font-semibold text-indigo-600">
+                    Uploading to Cloudinary...
+                </h2>
                 <Loading />
             </div>
         );
@@ -102,18 +112,32 @@ const Selling_form = () => {
 
     return (
         <div className='w-[85%] max-w-6xl h-[80vh] bg-white flex mx-auto mt-[3rem] rounded-3xl shadow-2xl overflow-hidden items-center border border-gray-100'>
+
+            {/* Left Image */}
             <div className='hidden md:block h-full w-1/2'>
-                <img src="/buy.png" alt="Real Estate" className="w-full h-full object-cover" />
+                <img
+                    src="/buy.png"
+                    alt="Real Estate"
+                    className="w-full h-full object-cover"
+                />
             </div>
-            
+
+            {/* Form */}
             <div className='h-full w-full md:w-1/2 px-10 py-3 overflow-y-auto'>
+
                 <div className={styles.heading_div}>
-                    <h1 className="text-3xl font-bold text-indigo-600 mb-6">List Your Property</h1>
+                    <h1 className="text-3xl font-bold text-indigo-600 mb-6">
+                        List Your Property
+                    </h1>
                 </div>
 
                 <form className="space-y-1" onSubmit={handleSubmit}>
+
+                    {/* Location */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-sm font-semibold text-gray-600">Location*</label>
+                        <label className="text-sm font-semibold text-gray-600">
+                            Location*
+                        </label>
                         <input
                             className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-indigo-500 transition-all"
                             type="text"
@@ -125,9 +149,13 @@ const Selling_form = () => {
                         />
                     </div>
 
+                    {/* Beds Baths */}
                     <div className="grid grid-cols-2 gap-4">
+
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-semibold text-gray-600">Bedrooms</label>
+                            <label className="text-sm font-semibold text-gray-600">
+                                Bedrooms
+                            </label>
                             <input
                                 className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-indigo-500"
                                 type="number"
@@ -136,8 +164,11 @@ const Selling_form = () => {
                                 onChange={handleChange}
                             />
                         </div>
+
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-semibold text-gray-600">Bathrooms</label>
+                            <label className="text-sm font-semibold text-gray-600">
+                                Bathrooms
+                            </label>
                             <input
                                 className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-indigo-500"
                                 type="number"
@@ -146,11 +177,16 @@ const Selling_form = () => {
                                 onChange={handleChange}
                             />
                         </div>
+
                     </div>
 
+                    {/* Area Price */}
                     <div className="grid grid-cols-2 gap-4">
+
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-semibold text-gray-600">Area (sqft)*</label>
+                            <label className="text-sm font-semibold text-gray-600">
+                                Area (sqft)*
+                            </label>
                             <input
                                 className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-indigo-500"
                                 type="number"
@@ -160,8 +196,11 @@ const Selling_form = () => {
                                 required
                             />
                         </div>
+
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-semibold text-gray-600">Price (₹)*</label>
+                            <label className="text-sm font-semibold text-gray-600">
+                                Price (₹)*
+                            </label>
                             <input
                                 className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-indigo-500"
                                 type="number"
@@ -171,10 +210,15 @@ const Selling_form = () => {
                                 required
                             />
                         </div>
+
                     </div>
 
+                    {/* Category */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-sm font-semibold text-gray-600">Category</label>
+                        <label className="text-sm font-semibold text-gray-600">
+                            Category
+                        </label>
+
                         <select
                             name="category"
                             value={formData.category}
@@ -186,8 +230,12 @@ const Selling_form = () => {
                         </select>
                     </div>
 
+                    {/* Images */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-sm font-semibold text-gray-600">Property Images* (Min 1)</label>
+                        <label className="text-sm font-semibold text-gray-600">
+                            Property Images* (Min 1)
+                        </label>
+
                         <input
                             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                             type="file"
@@ -197,18 +245,25 @@ const Selling_form = () => {
                             onChange={handleChange}
                             required
                         />
-                        <p className="text-xs text-gray-400 mt-1">{images.length} files selected</p>
+
+                        <p className="text-xs text-gray-400 mt-1">
+                            {images.length} files selected
+                        </p>
                     </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-indigo-700 active:scale-[0.98] transition-all"
                     >
                         List Property
                     </button>
+
                 </form>
+
             </div>
+
             <ToastContainer />
+
         </div>
     );
 };
