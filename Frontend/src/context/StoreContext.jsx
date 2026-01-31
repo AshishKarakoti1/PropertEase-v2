@@ -37,7 +37,7 @@ const StoreContextProvider = ({ children }) => {
 
     const getUserData = async (email) => {
         try {
-            const response = await axios.get(`http://localhost:9090/user/?email=${email}`);
+            const response = await axios.get(`http://localhost:5000/user/?email=${email}`);
             setUser(response.data.userData);
         } catch (err) {
             console.error(err);
@@ -47,7 +47,7 @@ const StoreContextProvider = ({ children }) => {
     const fetchMyListings = async (email) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:9090/user/listings?email=${email}`);
+            const response = await axios.get(`http://localhost:5000/user/listings?email=${email}`);
             setMyListings(response.data.listings || []);
         } catch (err) {
             setError('Failed to fetch listings.');
@@ -60,7 +60,7 @@ const StoreContextProvider = ({ children }) => {
     const fetchMyFavorites = async (email) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:9090/user/favorites?email=${email}`);
+            const response = await axios.get(`http://localhost:5000/user/favorites?email=${email}`);
             setMyFavorites(response.data.favorites || []);
         } catch (err) {
             setError('Failed to fetch listings.');
@@ -72,7 +72,7 @@ const StoreContextProvider = ({ children }) => {
 
     const addToFavorites = async (email, id) => {
         try {
-            const response = await axios.post('http://localhost:9090/user/favorites', { email, id });
+            const response = await axios.post('http://localhost:5000/user/favorites', { email, id });
             setMyFavorites(response.data.favorites || []);
             handleSuccess('Added to favorites');
         } catch (err) {
@@ -84,7 +84,7 @@ const StoreContextProvider = ({ children }) => {
 
     const deleteFromFavorites = async (email, id) => {
         try {
-            const response = await axios.delete(`http://localhost:9090/user/favorites?email=${email}&id=${id}`);
+            const response = await axios.delete(`http://localhost:5000/user/favorites?email=${email}&id=${id}`);
             setMyFavorites(response.data.favorites || []);
             handleSuccess('Removed from favorites');
         } catch (err) {
@@ -99,7 +99,7 @@ const StoreContextProvider = ({ children }) => {
         setError(null);
 
         try {
-            const response = await axios.get(`http://localhost:9090/buy?page=${page}`);
+            const response = await axios.get(`http://localhost:5000/buy?page=${page}`);
             const { listings, totalPages: total, currentPage: current } = response.data;
 
             setData(listings || []);
@@ -119,7 +119,7 @@ const StoreContextProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post(`http://localhost:9090/buy?page=${page}`, filters);
+            const response = await axios.post(`http://localhost:5000/buy?page=${page}`, filters);
             const { filteredListings, totalPages: total, currentPage: current } = response.data;
 
             setData(filteredListings || []);

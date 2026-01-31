@@ -30,7 +30,7 @@ const Edit = () => {
 
     const fetchDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:9090/buy/${id}`);
+            const response = await axios.get(`http://localhost:5000/buy/${id}`);
             const data = response.data.listing;
             setListing(data);
             setCurrentListing({
@@ -57,7 +57,7 @@ const Edit = () => {
         e.preventDefault();
         setUpdating(true);
         try {
-            const response = await axios.put(`http://localhost:9090/buy/${id}`, currentListing, {
+            const response = await axios.put(`http://localhost:5000/buy/${id}`, currentListing, {
                 headers: { 'Content-Type': 'application/json' },
             });
             

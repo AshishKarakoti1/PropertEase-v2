@@ -23,7 +23,7 @@ const Listing = ({ id, url, location, bedrooms, bathrooms, area, price, category
 
         try {
             const email = localStorage.getItem('user_email');
-            const URL = `http://localhost:9090/buy/${id}`;
+            const URL = `http://localhost:5000/buy/${id}`;
             const response = await axios.delete(URL, {
                 headers: { 'Content-Type': 'application/json' },
                 data: { email }

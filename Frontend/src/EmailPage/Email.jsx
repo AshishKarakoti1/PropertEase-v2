@@ -28,7 +28,7 @@ const Email = () => {
 
         setSending(true);
         try {
-            const response = await axios.post('http://localhost:9090/contact/sendEmail', {
+            const response = await axios.post('http://localhost:5000/contact/sendEmail', {
                 to: userEmail,
                 subject: emailDetails.subject,
                 text: emailDetails.text

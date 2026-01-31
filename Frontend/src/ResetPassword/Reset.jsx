@@ -20,7 +20,7 @@ const Reset = () => {
         e.preventDefault();
         setPassword('');
         try {
-            const response = await axios.post(`http://localhost:9090/password/reset/${token}`, { password });
+            const response = await axios.post(`http://localhost:5000/password/reset/${token}`, { password });
             const { success, message } = response.data;
             if (success) {
                 handleSuccess(message);

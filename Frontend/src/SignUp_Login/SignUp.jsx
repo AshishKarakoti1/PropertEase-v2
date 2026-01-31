@@ -35,7 +35,7 @@ const SignUp = () => {
 
         try {
             setLoading(true);
-            const url = "http://localhost:9090/auth/signup";
+            const url = "http://localhost:5000/auth/signup";
             const { data } = await axios.post(url, {
                 username,
                 email,

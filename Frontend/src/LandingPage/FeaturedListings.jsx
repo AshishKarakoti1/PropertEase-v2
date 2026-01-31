@@ -10,7 +10,7 @@ const FeaturedListings = () => {
     useEffect(() => {
         const fetchFeatured = async () => {
             try {
-                const { data } = await axios.get('http://localhost:9090/buy/featured');
+                const { data } = await axios.get('http://localhost:5000/buy/featured');
                 if (data.success) {
                     setListings(data.listings);
                 }

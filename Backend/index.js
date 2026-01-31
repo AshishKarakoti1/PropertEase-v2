@@ -11,13 +11,17 @@ const userRouter = require('./Routes/userRoute');
 const emailRouter = require('./Routes/emailRoutes');
 const passwordRouter = require('./Routes/passwordRoute');
 
-const PORT = process.env.PORT || 9090;
+const PORT = process.env.PORT || 5000;
 const URL = process.env.MONGO_URL_PROD;
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.get("/", (req,res)=>{
+    res.send("Backend Live");
+});
 
 app.use('/buy', buyRoute);
 app.use('/sell', sellRoute);

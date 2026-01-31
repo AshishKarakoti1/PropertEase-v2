@@ -37,7 +37,7 @@ const Profile = () => {
 
         try {
             setLoading(true);
-            const { data } = await axios.post('http://localhost:9090/user/setPhoto', formData);
+            const { data } = await axios.post('http://localhost:5000/user/setPhoto', formData);
             if (data.success) {
                 setUser(data.updatedUser);
                 handleSuccess('Profile photo updated');
@@ -51,7 +51,7 @@ const Profile = () => {
 
     const handleUpdate = async () => {
         try {
-            const { data } = await axios.post(`http://localhost:9090/user/?email=${email}`, userDetails);
+            const { data } = await axios.post(`http://localhost:5000/user/?email=${email}`, userDetails);
             if (data.success) {
                 setUser(data.user);
                 handleSuccess('Details updated successfully');

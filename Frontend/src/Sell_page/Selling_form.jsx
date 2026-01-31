@@ -68,7 +68,7 @@ const Selling_form = () => {
         });
 
         try {
-            const URL = "http://localhost:9090/sell";
+            const URL = "http://localhost:5000/sell";
             const response = await axios.post(URL, dataPayload, {
                 headers: {
                     'Content-Type': 'multipart/form-data',

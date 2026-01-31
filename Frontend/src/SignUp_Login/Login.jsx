@@ -25,7 +25,7 @@ const Login = () => {
 
         try {
             setLoading(true);
-            const url = "http://localhost:9090/auth/login";
+            const url = "http://localhost:5000/auth/login";
             const { data } = await axios.post(url, { email, password });
 
             // In our new backend, we return: { success, message, jwtToken, user }

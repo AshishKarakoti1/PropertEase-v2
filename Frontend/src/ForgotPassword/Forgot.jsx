@@ -21,7 +21,7 @@ const Forgot = () => {
         setIsSubmitting(true);
         try {
             const response = await axios.post(
-                'http://localhost:9090/password/forgot',
+                'http://localhost:5000/password/forgot',
                 { email },
                 { headers: { 'Content-Type': 'application/json' } }
             );

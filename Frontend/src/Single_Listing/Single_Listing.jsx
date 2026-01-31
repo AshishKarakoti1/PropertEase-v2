@@ -31,7 +31,7 @@ const Single_Listing = () => {
 
     const fetchDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:9090/buy/${id}`);
+            const response = await axios.get(`http://localhost:5000/buy/${id}`);
             setListing(response.data.listing);
         } catch (err) {
             setError('Failed to fetch property details.');
