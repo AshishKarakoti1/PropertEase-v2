@@ -12,7 +12,7 @@ const emailRouter = require('./Routes/emailRoutes');
 const passwordRouter = require('./Routes/passwordRoute');
 
 const PORT = process.env.PORT || 9090;
-const URL = process.env.MONGO_URL;
+const URL = process.env.MONGO_URL_PROD;
 
 const app = express();
 
